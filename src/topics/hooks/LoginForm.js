@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 
-function Login() {
+export const LOGIN_API = '/api/login'
+
+function Login({ endpoint }) {
     const [state, setState] = useState({
         loading: false,
         resolved: false,
@@ -16,14 +18,15 @@ function Login() {
             return
         }
 
-        window.fetch('/api/login', {
+        window.fetch(endpoint, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 username: usernameInput.value,
                 password: passwordInput.value,
             })
-        }).then(r => r.json())
+        })
+        .then(r => r.json())
         .then(user => {
             setState({ loading: false, resolved: true, error: null })
             window.localStorage.setItem('token', user.token)
@@ -43,11 +46,15 @@ function Login() {
                 <input id="passwordInput" />
             </div>
             <button type="submit">Login</button>
-            { state.loading ? <div>Loading...</div> : null }
-            { state.error ? <div role="alert">{state.error.message}</div> : null }
-            { state.resolved ?  <div role="alert">{'Logged in successfully!'}</div> : null }
+            { state.loading && <div>Loading...</div> }
+            { state.error && <div role="alert">{state.error.message}</div> }
+            { state.resolved &&  <div role="alert">{'Logged in successfully!'}</div> }
         </form>
     )
 }
 
-export default Login
+const withLoginApi = (endpoint) => (component) => (props) => {
+    return component({ endpoint, ...props })
+}
+
+export default withLoginApi(LOGIN_API)(Login)
