@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 export const LOGIN_API = '/api/login'
 
-function Login({ endpoint }) {
+export function Login({ endpoint }) {
     const [state, setState] = useState({
         loading: false,
         resolved: false,
@@ -53,8 +53,11 @@ function Login({ endpoint }) {
     )
 }
 
-const withLoginApi = (endpoint) => (component) => (props) => {
-    return component({ endpoint, ...props })
-}
+const withLoginApi = 
+    (endpoint) => 
+        (component) => 
+            (props) => 
+                component({ endpoint, ...props })
+
 
 export default withLoginApi(LOGIN_API)(Login)
