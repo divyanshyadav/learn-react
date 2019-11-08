@@ -5,6 +5,7 @@ import Counter from './topics/hooks/Counter'
 import LoginForm from './topics/hooks/LoginForm'
 import BasicExample from './topics/react-router/BasicExample'
 import NestedRouting from './topics/react-router/NestedRouting'
+import AuthExample from './topics/react-router/AuthExample'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Wrapper name="React Router Examples">
           <BasicExample />
           <NestedRouting />
+          <AuthExample />
         </Wrapper>
       </Wrapper>
     </div>
