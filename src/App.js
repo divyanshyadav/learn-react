@@ -7,6 +7,7 @@ import BasicExample from './topics/react-router/BasicExample'
 import NestedRouting from './topics/react-router/NestedRouting'
 import AuthExample from './topics/react-router/AuthExample'
 import CustomLink from './topics/react-router/CustomLink'
+import PropChange from './topics/hooks/PropsChange'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <AuthExample />
           <CustomLink />
         </Wrapper>
+        <PropChange />
       </Wrapper>
     </div>
   );
