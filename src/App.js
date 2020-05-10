@@ -8,11 +8,24 @@ import NestedRouting from './topics/react-router/NestedRouting'
 import AuthExample from './topics/react-router/AuthExample'
 import CustomLink from './topics/react-router/CustomLink'
 import PropChange from './topics/hooks/PropsChange'
+import { FadeContainer } from './topics/animation/UsingTransition'
+import { CSSFadeContainer } from './topics/animation/UsingCSSTransition'
+import CustomPropTypes from './topics/customPropTypes'
+import ApiCall from './topics/api-call'
 
 function App() {
   return (
     <div className="App">
       <Wrapper>
+        <ApiCall />
+        <Wrapper name="Animation using React Transition Group">
+          <FadeContainer name="Fade using <Transition>">
+            <div>Fade in</div>
+          </FadeContainer>
+          <CSSFadeContainer name="Fade using <CSSTransition>">
+            <div>Fade in</div>
+          </CSSFadeContainer>
+        </Wrapper>
         <Counter />
         <LoginForm name="Login Form"/>
         <Wrapper name="React Router Examples">
@@ -22,6 +35,7 @@ function App() {
           <CustomLink />
         </Wrapper>
         <PropChange />
+        <CustomPropTypes />
       </Wrapper>
     </div>
   );
