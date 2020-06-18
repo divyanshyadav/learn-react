@@ -20,7 +20,7 @@ const camelCaseToNormal = (string) => {
     return words.join(' ')
 }
 
-export const Wrapper = ({ children, title }) => {
+export const Wrapper = ({ children, title, collapsed = true }) => {
 
     const renderChild = (child, index) => {
         let { name } = child.type
@@ -40,6 +40,8 @@ export const Wrapper = ({ children, title }) => {
                 {child}
             </div>)
     }
+
+
 
     return (
         <>
