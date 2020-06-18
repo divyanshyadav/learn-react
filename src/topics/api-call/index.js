@@ -102,7 +102,7 @@ function PokemonSearch() {
 
     return (
     <div>
-        <input type='text' value={pokemon} onChange={handleOnChange} />
+        <input type='text' placeholder={'any pokemon name!'} value={pokemon} onChange={handleOnChange} />
         {getContent()}
     </div>)
 }

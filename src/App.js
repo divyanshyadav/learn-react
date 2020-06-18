@@ -13,11 +13,13 @@ import { FadeContainer } from './topics/animation/UsingTransition'
 import { CSSFadeContainer } from './topics/animation/UsingCSSTransition'
 import CustomPropTypes from './topics/customPropTypes'
 import ApiCall from './topics/api-call'
+import AuthAndUnAuthAppExample from './topics/authentication/App'
 
 function App() {
   return (
     <div className="App">
       <Wrapper>
+        <AuthAndUnAuthAppExample />
         <ApiCall />
         <Wrapper name="Animation using React Transition Group">
           <FadeContainer name="Fade using <Transition>">
