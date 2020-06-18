@@ -16,7 +16,7 @@ function App() {
         <Wrapper name="React Router Examples">
           <BasicExample />
           <NestedRouting />
-          <URLParameters />
+          <URLParameters name="URL Parameters"/>
         </Wrapper>
       </Wrapper>
     </div>

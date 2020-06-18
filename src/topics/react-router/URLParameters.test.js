@@ -1,13 +1,19 @@
 import React from 'react'
-import { render } from '@testing-library/react'
-import URLParameters from './URLParameters'
+import { render, fireEvent } from '@testing-library/react'
+import {Router} from 'react-router-dom'
+import {createMemoryHistory} from 'history'
+import { URLParameters } from './URLParameters'
 
 
-it('should render correctly', () => {
-    const { queryByText, getByText } = render(<URLParameters />)
+test('render correctly and I can navigate to provided links', () => {
+    const history = createMemoryHistory({initialEntries: ['/']})
 
-    expect(queryByText(/netflix/i)).not.toBeNull()
-    expect(queryByText(/amazon prime/i)).not.toBeNull()
+    const { getByRole, getByText } = render(
+      <Router history={history}>
+        <URLParameters />
+      </Router>,
+    )
 
-    
+    fireEvent.click(getByText(/netflix/i))
+    expect(getByRole('heading')).toHaveTextContent(/welcome to netflix/i)
 })

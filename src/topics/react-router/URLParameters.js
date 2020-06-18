@@ -8,9 +8,9 @@ import {
 } from 'react-router-dom'
 
 
-export default function URLParameters() {
+export function URLParameters() {
     return (
-        <Router>
+        <div>
             <ul>
                 <li>
                     <Link to='/netflix'>Netflix</Link>
@@ -23,14 +23,20 @@ export default function URLParameters() {
             <Switch>
                 <Route path='/:id' children={<Content />} />
             </Switch>
-        </Router>
+        </div>   
     )
 }
 
 const Content = () => {
     const { id } = useParams()
 
-    return <div>{id}</div>
+    return <div role="heading">{`Welcome to ${id}`}</div>
 }
 
 
+// making testable
+const withRouter = Component => {
+    return (props) => () => <Router><Component {...props}/></Router>
+}
+
+export default withRouter(URLParameters)()
