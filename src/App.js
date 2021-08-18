@@ -5,6 +5,7 @@ import Counter from './topics/hooks/Counter'
 import LoginForm from './topics/hooks/LoginForm'
 import BasicExample from './topics/react-router/BasicExample'
 import NestedRouting from './topics/react-router/NestedRouting'
+import URLParameters from './topics/react-router/URLParameters'
 import AuthExample from './topics/react-router/AuthExample'
 import CustomLink from './topics/react-router/CustomLink'
 import PropChange from './topics/hooks/PropsChange'
@@ -14,6 +15,7 @@ import CustomPropTypes from './topics/customPropTypes'
 import ApiCall from './topics/api-call'
 import HookLifeCycle from './topics/hooks/HookLifeCycle'
 import StyledDiv from './topics/styled-components/StyledDiv';
+import AuthAndUnAuthAppExample from './topics/authentication/App'
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
           <StyledDiv>Hello There!</StyledDiv>
         </Wrapper>
         <HookLifeCycle name="Hooks flow | see console"/>
+        <AuthAndUnAuthAppExample />
         <ApiCall />
         <Wrapper name="Animation using React Transition Group">
           <FadeContainer name="Fade using <Transition>">
@@ -37,6 +40,7 @@ function App() {
         <Wrapper name="React Router Examples">
           <BasicExample />
           <NestedRouting />
+          <URLParameters name="URL Parameters"/>
           <AuthExample />
           <CustomLink />
         </Wrapper>
