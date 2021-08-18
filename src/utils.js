@@ -1,6 +1,6 @@
 import React from 'react';
 
-const camelCaseToNormal = (string) => {
+const camelCaseToNormal = (string = '') => {
     const words = []
     let word = ''
     

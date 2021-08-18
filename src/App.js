@@ -12,11 +12,17 @@ import { FadeContainer } from './topics/animation/UsingTransition'
 import { CSSFadeContainer } from './topics/animation/UsingCSSTransition'
 import CustomPropTypes from './topics/customPropTypes'
 import ApiCall from './topics/api-call'
+import HookLifeCycle from './topics/hooks/HookLifeCycle'
+import StyledDiv from './topics/styled-components/StyledDiv';
 
 function App() {
   return (
     <div className="App">
       <Wrapper>
+        <Wrapper name="Styled Components Examples">
+          <StyledDiv>Hello There!</StyledDiv>
+        </Wrapper>
+        <HookLifeCycle name="Hooks flow | see console"/>
         <ApiCall />
         <Wrapper name="Animation using React Transition Group">
           <FadeContainer name="Fade using <Transition>">

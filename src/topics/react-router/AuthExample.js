@@ -15,7 +15,7 @@ const fakeAuth = {
         fakeAuth.isAuthenticated = true
         cb()
     },
-    signout: (cb) => {
+    sighOut: (cb) => {
         fakeAuth.isAuthenticated = false
         cb()
     }
@@ -59,8 +59,8 @@ export default function AuthExample() {
 const AuthButton = () => {
     const history = useHistory()
 
-    const signout = () => {
-        fakeAuth.signout(() => {
+    const sighOut = () => {
+        fakeAuth.sighOut(() => {
             history.push('/')
         })
     }
@@ -68,7 +68,7 @@ const AuthButton = () => {
     if (fakeAuth.isAuthenticated) {
         return <div>
                 <span>{'Welcome! '}</span>
-                <button onClick={signout}>signout</button>
+                <button onClick={sighOut}>sigh out</button>
             </div>
     } else {
         return <div>{'You are not logged in!'}</div>

@@ -1,18 +1,22 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
+
+/* 
+    What is debouncing?
+    Debouncing a function ensures that it doesn't get called too frequently
+*/
 
 function debounce (fn, timeout)  {
     let timer;
     
     return function(...args) {
-        const context = this
-
         clearTimeout(timer)
-        
-        timer = setTimeout(() => fn.apply(context, args), timeout)
+
+        timer = setTimeout(() => { 
+            fn.apply(this, args)
+        }, timeout)
     }
 }
-
-// catching
 
 const STATUS = {
     IDEAL: 'ideal',
@@ -21,13 +25,15 @@ const STATUS = {
     REJECTED: 'rejected'
 }
 
-const useFetch = (url, options) => {
+const useFetch = (url, { debounceTime = 0, ...rest } = {}) => {
     const [status, setStatus] = React.useState(STATUS.IDEAL)
     const [ data, setData ] = React.useState({})
     const [ error, setError ] = React.useState('')
-    const debounceOnFetch = React.useCallback(debounce(getDetails, 400), [])
+    const [ startFetch, setStartFetch ] = React.useState(false)
+    const debounceOnFetch = React.useCallback(debounce(getDetails, debounceTime), [])
 
     function getDetails(url, options) {
+        setStatus(STATUS.PENDING)
         fetch(url, options)
             .then(response => response.json())
             .then((result) => {
@@ -40,18 +46,50 @@ const useFetch = (url, options) => {
     }
 
     React.useEffect(() => {
-        setStatus(STATUS.PENDING)
-        debounceOnFetch(url, options)
-    }, [url, options, debounceOnFetch])
+        if (startFetch) {
+            debounceOnFetch(url, rest)
+        }
+    }, [url])
 
-    return { status, data, error }
+    return { status, data, error, startFetch: () => setStartFetch(true)}
 }
 
-const POKEMON_BASE_URL = 'https://pokeapi.co/api/v2'
+const POKEMON_SEARCH_API = 'https://pokeapi.co/api/v2/pokemon'
 
 function PokemonSearch() {
-    const [pokemon, setPokemon] = React.useState('bulbasaur')
-    const { status, data } = useFetch(`${POKEMON_BASE_URL}/pokemon/${pokemon}`)
+    const [pokemon, setPokemon] = React.useState('')
+    const { status, data, startFetch } = useFetch(`${POKEMON_SEARCH_API}/${pokemon}`, { 
+        debounceTime: 400
+    })
+
+    const renderPokemon = () => {
+        const { 
+            species: { name } = {},
+            sprites: { front_default, back_default } = {},
+            types,
+            weight
+        } = data
+        
+        if (!name) return
+
+        return (
+            <div>
+                <img src={front_default} 
+                    alt={`${name}-front`} 
+                    height="200"
+                />
+                <img src={back_default} 
+                    alt={`${name}-back`}
+                    height="200"
+                />
+                <div>
+                    <div><strong>Name:</strong> {name}</div>
+                    <div><strong>Type:</strong> {types.map(t => t.type.name).join(', ')}</div>
+                    <div><strong>Weight:</strong> {weight}</div>
+                </div>
+            </div>
+        )
+    }
 
     const getContent = () => {
         switch (status) {
@@ -60,35 +98,7 @@ function PokemonSearch() {
             case STATUS.PENDING:
                 return <div>Loading...</div> 
             case STATUS.RESOLVED:
-                const { 
-                    species: { name } = {},
-                    sprites: { front_default, back_default } = {},
-                    types,
-                    weight
-                } = data
-                
-                if (!name) return
-
-                return (
-                    <div>
-                        <img src={front_default} 
-                            alt={`${name}-front`} 
-                            height="200"
-                        />
-                        <img src={back_default} 
-                            alt={`${name}-back`}
-                            height="200"
-                        />
-                        <div>
-                            <div>Name: {name}</div>
-                            <div>Type</div>
-                            <ul>
-                                {types.map(t => <li key={t.slot}>{t.type.name}</li>)}
-                            </ul>
-                            <div>Weight: {weight}</div>
-                        </div>
-                    </div>
-                )
+                return renderPokemon()
             case STATUS.REJECTED:
                 return <div>{`Not found`}</div>
             default:
@@ -97,12 +107,18 @@ function PokemonSearch() {
     }
 
     const handleOnChange = (event) => {
+        startFetch()
         setPokemon(event.target.value)
     }
 
     return (
     <div>
-        <input type='text' value={pokemon} onChange={handleOnChange} />
+        <input 
+            type='text' 
+            placeholder="eg. bulbasaur, charizard"
+            value={pokemon} 
+            onChange={handleOnChange} 
+        />
         {getContent()}
     </div>)
 }
