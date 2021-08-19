@@ -1,16 +1,12 @@
 import React, { useEffect, useRef } from 'react';
+import { myTag } from './tagged-template';
 
-const isFunc = (fn) => typeof fn === 'function';
 
 const myStyled = (Component) => (strings, ...exprs) => (props) => {
     const ref = useRef(null)
 
     useEffect(() => {
-        const styles = exprs.reduce((acc, exp, idx) => {
-            const value = isFunc(exp) ? exp() : exp
-            return acc + value + strings[idx + 1]
-        }, strings[0])
-
+        const styles = myTag(strings, ...exprs)
         ref.current.style = styles;
     }, [])
 
