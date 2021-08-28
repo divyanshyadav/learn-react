@@ -1,8 +1,11 @@
-import myStyled from "./myStyled";
+import myStyled from './myStyled';
+
+const backgroundColor = 'lightblue';
+const textColor = 'yellow';
 
 const StyledDiv = myStyled('div')`
-  color: yellow;
-  background: ${() => 'green'};
+  color: ${textColor};
+  background: ${() => backgroundColor};
 `;
 
 export default StyledDiv;
