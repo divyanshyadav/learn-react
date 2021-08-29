@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import useFetch, { STATUS } from './fetch-hook';
+import useFetch, { STATUS } from '../fetch-hook';
 import Pokemon from './Pokemon';
 
 function PokemonSearch() {

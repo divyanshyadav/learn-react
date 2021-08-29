@@ -12,7 +12,7 @@ import PropChange from './topics/hooks/PropsChange';
 import { FadeContainer } from './topics/animation/UsingTransition';
 import { CSSFadeContainer } from './topics/animation/UsingCSSTransition';
 import CustomPropTypes from './topics/customPropTypes';
-import ApiCall from './topics/api-call';
+import PokemonSearch from './topics/api-call/PokemonSearch';
 import HookLifeCycle from './topics/hooks/HookLifeCycle';
 import AuthAndUnAuthAppExample from './topics/authentication/App';
 import StyledDiv from './topics/styled-components/StyledDiv';
@@ -26,7 +26,7 @@ function App() {
 				</Wrapper>
 				<HookLifeCycle name="Hooks flow | see console" />
 				<AuthAndUnAuthAppExample />
-				<ApiCall />
+				<PokemonSearch />
 				<Wrapper name="Animation using React Transition Group">
 					<FadeContainer name="Fade using <Transition>">
 						<div>Fade in</div>
