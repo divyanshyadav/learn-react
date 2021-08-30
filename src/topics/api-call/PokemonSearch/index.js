@@ -5,7 +5,7 @@ import Pokemon from './Pokemon';
 
 function PokemonSearch() {
 	const [pokemon, setPokemon] = React.useState('');
-	const { status, data, startFetch } = useFetch(
+	const { status, data, startFetching } = useFetch(
 		`https://pokeapi.co/api/v2/pokemon/${pokemon}`,
 		{
 			debounceTime: 400
@@ -28,7 +28,7 @@ function PokemonSearch() {
 	};
 
 	const handleOnChange = (event) => {
-		startFetch();
+		startFetching();
 		setPokemon(event.target.value);
 	};
 
