@@ -1,19 +1,6 @@
 import React from 'react';
 import './styles.css';
 
-function filter(items, value, itemValue) {
-	let suggestions = [];
-
-	if (value) {
-		const regex = new RegExp(`^${value.toLowerCase()}`);
-		suggestions = items
-			.sort()
-			.filter((item) => regex.test(itemValue(item).toLowerCase()));
-	}
-
-	return suggestions;
-}
-
 function AutoCompleteText({
 	items,
 	onChange,
@@ -62,9 +49,20 @@ function AutoCompleteText({
 	);
 }
 
+function filter(items, value, itemValue) {
+	let suggestions = [];
+
+	if (value) {
+		const regex = new RegExp(`^${value}`, 'i');
+		suggestions = items.sort().filter((item) => regex.test(itemValue(item)));
+	}
+
+	return suggestions;
+}
+
 AutoCompleteText.defaultProps = {
-	items: ['Abc', 'abf'],
-	onChange: () => {},
+	items: [],
+	onChange: (value) => {},
 	renderItem: (item, value) => {
 		return (
 			<div>
