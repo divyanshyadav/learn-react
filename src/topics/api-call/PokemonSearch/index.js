@@ -5,10 +5,10 @@ import Pokemon from './Pokemon';
 
 function PokemonSearch() {
 	const [pokemon, setPokemon] = React.useState('');
-	const { status, data, startFetching } = useFetch(
+	const { status, data, error } = useFetch(
 		`https://pokeapi.co/api/v2/pokemon/${pokemon}`,
 		{
-			debounceTime: 400
+			debounceWait: 400
 		}
 	);
 
@@ -21,14 +21,13 @@ function PokemonSearch() {
 			case STATUS.RESOLVED:
 				return <Pokemon {...data} />;
 			case STATUS.REJECTED:
-				return <div>Not found</div>;
+				return <div>{error.message}</div>;
 			default:
-				return <div>Unknown Status</div>;
+				return null;
 		}
 	};
 
 	const handleOnChange = (event) => {
-		startFetching();
 		setPokemon(event.target.value);
 	};
 

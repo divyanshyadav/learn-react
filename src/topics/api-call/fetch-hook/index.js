@@ -12,8 +12,7 @@ export const STATUS = {
 const initialState = {
 	status: STATUS.IDEAL,
 	data: null,
-	error: '',
-	startFetching: false
+	error: ''
 };
 
 const types = {
@@ -26,8 +25,7 @@ const types = {
 const actions = {
 	setStatus: (status) => ({ type: types.SET_STATUS, status }),
 	setError: (error) => ({ type: types.SET_ERROR, error }),
-	setData: (data) => ({ type: types.SET_DATA, data }),
-	setStartFetching: (flag) => ({ type: types.SET_START_FETCHING, flag })
+	setData: (data) => ({ type: types.SET_DATA, data })
 };
 
 function reducer(state, action) {
@@ -38,8 +36,6 @@ function reducer(state, action) {
 			return { ...state, error: action.error };
 		case types.SET_DATA:
 			return { ...state, data: action.data };
-		case types.SET_START_FETCHING:
-			return { ...state, startFetching: action.flag };
 		default:
 			return state;
 	}
@@ -52,10 +48,8 @@ const useFetch = (url, { debounceWait = 0, ...options } = {}) => {
 	]);
 
 	useEffect(() => {
-		if (state.startFetching) {
-			debouncedFetch(url, options);
-		}
-	}, [url, state.startFetching, debouncedFetch, JSON.stringify(options)]);
+		debouncedFetch(url, options);
+	}, [url, debouncedFetch, JSON.stringify(options)]);
 
 	function callApi(url, options) {
 		dispatch(actions.setStatus(STATUS.PENDING));
@@ -73,10 +67,7 @@ const useFetch = (url, { debounceWait = 0, ...options } = {}) => {
 			});
 	}
 
-	return {
-		...state,
-		startFetching: () => dispatch(actions.setStartFetching(true))
-	};
+	return state;
 };
 
 export default useFetch;

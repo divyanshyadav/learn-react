@@ -16,11 +16,13 @@ import PokemonSearch from './topics/api-call/PokemonSearch';
 import HookLifeCycle from './topics/hooks/HookLifeCycle';
 import AuthAndUnAuthAppExample from './topics/authentication/App';
 import StyledDiv from './topics/styled-components/StyledDiv';
+import CountryAutoComplete from './topics/api-call/CountryAutoComplete';
 
 function App() {
 	return (
 		<div className="App">
 			<Wrapper>
+				<CountryAutoComplete />
 				<Wrapper name="Styled Components Examples">
 					<StyledDiv>Hello There!</StyledDiv>
 				</Wrapper>
