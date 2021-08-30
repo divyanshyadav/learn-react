@@ -1,4 +1,5 @@
 import React from 'react';
+import { scroll } from './utils';
 import './styles.css';
 
 function AutoCompleteText({
@@ -10,10 +11,11 @@ function AutoCompleteText({
 }) {
 	const [value, setValue] = React.useState(initialValue);
 	const [suggestions, setSuggestions] = React.useState([]);
-	const [pointer, setPointer] = React.useState(-1);
+	const [pointer, setPointer] = React.useState(0);
 
 	function handleChange({ target: { value } }) {
 		setValue(value);
+		reset();
 		setSuggestions(filter(items, value, itemValue));
 		onChange(value);
 	}
@@ -26,32 +28,28 @@ function AutoCompleteText({
 
 	function reset() {
 		setSuggestions([]);
-		setPointer(-1);
+		setPointer(0);
 	}
-
-	// const ref = React.useRef(null);
 
 	function renderSuggestions() {
 		if (suggestions.length === 0) return null;
 
 		return (
-			<ul
-			// ref={ref}
-			>
+			<ul>
 				{suggestions.map((s, idx) => {
 					return (
 						<li
-							// ref={(ele) => {
-							// 	if (ele && ref.current) {
-							// 		if (pointer === idx) {
-							// 			ref.current.scrollTop = ele.offsetTop;
-							// 		}
-							// 	}
-							// }}
+							ref={(ele) => {
+								if (ele) {
+									if (pointer === idx) {
+										scroll(ele);
+									}
+								}
+							}}
 							key={itemValue(s)}
 							onClick={() => onSelectSuggestion(s)}
 							className={pointer === idx ? 'active' : ''}
-							onMouseMove={() => setPointer(idx)}
+							onMouseEnter={() => setPointer(idx)}
 						>
 							{renderItem(s, value)}
 						</li>
@@ -76,6 +74,10 @@ function AutoCompleteText({
 	}
 
 	function handleKeyDown(e) {
+		if ([38, 40].includes(e.keyCode)) {
+			e.preventDefault();
+		}
+
 		if (e.keyCode === 38 && pointer > 0) {
 			setPointer((state) => state - 1);
 		} else if (e.keyCode === 40 && pointer < suggestions.length - 1) {
