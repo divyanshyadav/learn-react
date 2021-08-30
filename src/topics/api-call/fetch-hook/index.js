@@ -1,4 +1,6 @@
 import { useMemo, useReducer, useEffect } from 'react';
+import fetch from './fetch';
+import debounce from './debounce';
 
 export const STATUS = {
 	IDEAL: 'ideal',
@@ -43,58 +45,38 @@ function reducer(state, action) {
 	}
 }
 
-const useFetch = (url, { debounceTime = 0, ...config } = {}) => {
+const useFetch = (url, { debounceWait = 0, ...options } = {}) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
-	const customFetch = useMemo(() => debounce(callApi, debounceTime), [
-		debounceTime
+	const debouncedFetch = useMemo(() => debounce(callApi, debounceWait), [
+		debounceWait
 	]);
+
+	useEffect(() => {
+		if (state.startFetching) {
+			debouncedFetch(url, options);
+		}
+	}, [url, state.startFetching, debouncedFetch, JSON.stringify(options)]);
 
 	function callApi(url, options) {
 		dispatch(actions.setStatus(STATUS.PENDING));
 		fetch(url, options)
-			.then((response) => response.json())
 			.then((result) => {
 				dispatch(actions.setData(result));
 				dispatch(actions.setStatus(STATUS.RESOLVED));
 			})
 			.catch((error) => {
-				dispatch(actions.setError(error.message));
+				if (error.name === 'AbortError') {
+					return;
+				}
+				dispatch(actions.setError(error));
 				dispatch(actions.setStatus(STATUS.REJECTED));
 			});
 	}
-
-	useEffect(() => {
-		if (state.startFetching) {
-			customFetch(url, config);
-		}
-	}, [url]);
 
 	return {
 		...state,
 		startFetching: () => dispatch(actions.setStartFetching(true))
 	};
 };
-
-// ------------------utils----------------------
-
-/* 
-    What is debouncing?
-    Debouncing a function ensures that it doesn't get called too frequently
-*/
-function debounce(fn, timeout) {
-	let timer;
-	var controller;
-	return function (...args) {
-		if (controller) controller.abort();
-		controller = new AbortController();
-		clearTimeout(timer);
-
-		timer = setTimeout(() => {
-			let signal = controller.signal;
-
-			fn(args[0], { signal, ...args[1] });
-		}, timeout);
-	};
-}
 
 export default useFetch;
