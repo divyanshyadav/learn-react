@@ -10,6 +10,7 @@ function AutoCompleteText({
 }) {
 	const [value, setValue] = React.useState(initialValue);
 	const [suggestions, setSuggestions] = React.useState([]);
+	const [pointer, setPointer] = React.useState(-1);
 
 	function handleChange({ target: { value } }) {
 		setValue(value);
@@ -19,20 +20,39 @@ function AutoCompleteText({
 
 	function onSelectSuggestion(suggestion) {
 		setValue(itemValue(suggestion));
-		setSuggestions([]);
+		reset();
 		onChange(suggestion);
 	}
 
-	function handleFocus() {
-		setSuggestions(filter(items, value, itemValue));
+	function reset() {
+		setSuggestions([]);
+		setPointer(-1);
 	}
 
+	// const ref = React.useRef(null);
+
 	function renderSuggestions() {
+		if (suggestions.length === 0) return null;
+
 		return (
-			<ul>
-				{suggestions.map((s) => {
+			<ul
+			// ref={ref}
+			>
+				{suggestions.map((s, idx) => {
 					return (
-						<li key={s} onClick={() => onSelectSuggestion(s)} tabIndex="0">
+						<li
+							// ref={(ele) => {
+							// 	if (ele && ref.current) {
+							// 		if (pointer === idx) {
+							// 			ref.current.scrollTop = ele.offsetTop;
+							// 		}
+							// 	}
+							// }}
+							key={itemValue(s)}
+							onClick={() => onSelectSuggestion(s)}
+							className={pointer === idx ? 'active' : ''}
+							onMouseMove={() => setPointer(idx)}
+						>
 							{renderItem(s, value)}
 						</li>
 					);
@@ -41,9 +61,38 @@ function AutoCompleteText({
 		);
 	}
 
+	function handleFocus() {
+		setSuggestions(filter(items, value, itemValue));
+	}
+
+	function handleBlur(e) {
+		const currentTarget = e.currentTarget;
+
+		setTimeout(() => {
+			if (!currentTarget.contains(document.activeElement)) {
+				reset();
+			}
+		}, 0);
+	}
+
+	function handleKeyDown(e) {
+		if (e.keyCode === 38 && pointer > 0) {
+			setPointer((state) => state - 1);
+		} else if (e.keyCode === 40 && pointer < suggestions.length - 1) {
+			setPointer((state) => state + 1);
+		} else if (e.keyCode === 13 && pointer >= 0 && pointer < suggestions.length) {
+			onSelectSuggestion(suggestions[pointer]);
+		}
+	}
+
 	return (
-		<div className="AutoCompleteText" onFocus={handleFocus}>
-			<input value={value} onChange={handleChange} />
+		<div className="AutoCompleteText" onBlur={handleBlur} tabIndex="1">
+			<input
+				value={value}
+				onChange={handleChange}
+				onFocus={handleFocus}
+				onKeyDown={handleKeyDown}
+			/>
 			{renderSuggestions()}
 		</div>
 	);

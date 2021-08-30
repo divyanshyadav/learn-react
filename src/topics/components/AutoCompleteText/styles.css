@@ -22,14 +22,16 @@
 	border: 1px solid gray;
 	box-sizing: border-box;
 	box-shadow: 2px 3px 4px 0px rgba(105, 105, 105, 0.75);
+	/* max-height: 200px; */
+	overflow-y: scroll;
+}
+
+.AutoCompleteText ul .active {
+	background-color: yellow;
 }
 
 .AutoCompleteText li {
 	cursor: pointer;
 	padding: 6px 10px;
 	font-size: 18px;
-}
-
-.AutoCompleteText li:hover {
-	background-color: lightblue;
 }
