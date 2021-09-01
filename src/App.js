@@ -19,38 +19,38 @@ import StyledDiv from './topics/styled-components/StyledDiv';
 import CountryAutoComplete from './topics/api-call/CountryAutoComplete';
 
 function App() {
-	return (
-		<div className="App">
-			<Wrapper>
-				<CountryAutoComplete />
-				<Wrapper name="Styled Components Examples">
-					<StyledDiv>Hello There!</StyledDiv>
-				</Wrapper>
-				<HookLifeCycle name="Hooks flow | see console" />
-				<AuthAndUnAuthAppExample />
-				<PokemonSearch />
-				<Wrapper name="Animation using React Transition Group">
-					<FadeContainer name="Fade using <Transition>">
-						<div>Fade in</div>
-					</FadeContainer>
-					<CSSFadeContainer name="Fade using <CSSTransition>">
-						<div>Fade in</div>
-					</CSSFadeContainer>
-				</Wrapper>
-				<Counter />
-				<LoginForm name="Login Form" />
-				<Wrapper name="React Router Examples">
-					<BasicExample />
-					<NestedRouting />
-					<URLParameters name="URL Parameters" />
-					<AuthExample />
-					<CustomLink />
-				</Wrapper>
-				<PropChange />
-				<CustomPropTypes />
-			</Wrapper>
-		</div>
-	);
+  return (
+    <div className="App">
+      <Wrapper>
+        <CountryAutoComplete />
+        <Wrapper name="Styled Components Examples">
+          <StyledDiv>Hello There!</StyledDiv>
+        </Wrapper>
+        <HookLifeCycle name="Hooks flow | see console" />
+        <AuthAndUnAuthAppExample />
+        <PokemonSearch />
+        <Wrapper name="Animation using React Transition Group">
+          <FadeContainer name="Fade using <Transition>">
+            <div>Fade in</div>
+          </FadeContainer>
+          <CSSFadeContainer name="Fade using <CSSTransition>">
+            <div>Fade in</div>
+          </CSSFadeContainer>
+        </Wrapper>
+        <Counter />
+        <LoginForm name="Login Form" />
+        <Wrapper name="React Router Examples">
+          <BasicExample />
+          <NestedRouting />
+          <URLParameters name="URL Parameters" />
+          <AuthExample />
+          <CustomLink />
+        </Wrapper>
+        <PropChange />
+        <CustomPropTypes />
+      </Wrapper>
+    </div>
+  );
 }
 
 export default App;
