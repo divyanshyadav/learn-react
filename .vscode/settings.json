@@ -1,7 +1,9 @@
 {
-    "eslint.autoFixOnSave": true,
-    "eslint.enable": true,
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
-    }
+	"eslint.autoFixOnSave": true,
+	"eslint.enable": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"appService.defaultWebAppToDeploy": "/subscriptions/31abcb6e-0cfa-46d1-9a9a-444011113147/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/learn-react",
+	"appService.deploySubpath": "."
 }
