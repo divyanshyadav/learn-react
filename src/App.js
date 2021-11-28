@@ -1,32 +1,34 @@
 import React from 'react';
 import './App.css';
-import { Wrapper } from './utils'
-import Counter from './topics/hooks/Counter'
-import LoginForm from './topics/hooks/LoginForm'
-import BasicExample from './topics/react-router/BasicExample'
-import NestedRouting from './topics/react-router/NestedRouting'
-import URLParameters from './topics/react-router/URLParameters'
-import AuthExample from './topics/react-router/AuthExample'
-import CustomLink from './topics/react-router/CustomLink'
-import PropChange from './topics/hooks/PropsChange'
-import { FadeContainer } from './topics/animation/UsingTransition'
-import { CSSFadeContainer } from './topics/animation/UsingCSSTransition'
-import CustomPropTypes from './topics/customPropTypes'
-import ApiCall from './topics/api-call'
-import HookLifeCycle from './topics/hooks/HookLifeCycle'
+import { Wrapper } from './utils';
+import Counter from './topics/hooks/Counter';
+import LoginForm from './topics/hooks/LoginForm';
+import BasicExample from './topics/react-router/BasicExample';
+import NestedRouting from './topics/react-router/NestedRouting';
+import URLParameters from './topics/react-router/URLParameters';
+import AuthExample from './topics/react-router/AuthExample';
+import CustomLink from './topics/react-router/CustomLink';
+import PropChange from './topics/hooks/PropsChange';
+import { FadeContainer } from './topics/animation/UsingTransition';
+import { CSSFadeContainer } from './topics/animation/UsingCSSTransition';
+import CustomPropTypes from './topics/customPropTypes';
+import PokemonSearch from './topics/api-call/PokemonSearch';
+import HookLifeCycle from './topics/hooks/HookLifeCycle';
+import AuthAndUnAuthAppExample from './topics/authentication/App';
 import StyledDiv from './topics/styled-components/StyledDiv';
-import AuthAndUnAuthAppExample from './topics/authentication/App'
+import CountryAutoComplete from './topics/api-call/CountryAutoComplete';
 
 function App() {
   return (
     <div className="App">
       <Wrapper>
+        <CountryAutoComplete />
         <Wrapper name="Styled Components Examples">
           <StyledDiv>Hello There!</StyledDiv>
         </Wrapper>
-        <HookLifeCycle name="Hooks flow | see console"/>
+        <HookLifeCycle name="Hooks flow | see console" />
         <AuthAndUnAuthAppExample />
-        <ApiCall />
+        <PokemonSearch />
         <Wrapper name="Animation using React Transition Group">
           <FadeContainer name="Fade using <Transition>">
             <div>Fade in</div>
@@ -36,11 +38,11 @@ function App() {
           </CSSFadeContainer>
         </Wrapper>
         <Counter />
-        <LoginForm name="Login Form"/>
+        <LoginForm name="Login Form" />
         <Wrapper name="React Router Examples">
           <BasicExample />
           <NestedRouting />
-          <URLParameters name="URL Parameters"/>
+          <URLParameters name="URL Parameters" />
           <AuthExample />
           <CustomLink />
         </Wrapper>
