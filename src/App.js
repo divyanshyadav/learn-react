@@ -17,11 +17,15 @@ import HookLifeCycle from './topics/hooks/HookLifeCycle';
 import AuthAndUnAuthAppExample from './topics/authentication/App';
 import StyledDiv from './topics/styled-components/StyledDiv';
 import CountryAutoComplete from './topics/api-call/CountryAutoComplete';
+import AppWithTheme from './topics/patterns/provider-pattern/ThemedApp';
 
 function App() {
   return (
     <div className="App">
       <Wrapper>
+        <Wrapper name="Context Examples">
+          <AppWithTheme />
+        </Wrapper>
         <CountryAutoComplete />
         <Wrapper name="Styled Components Examples">
           <StyledDiv>Hello There!</StyledDiv>
